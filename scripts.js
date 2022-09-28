@@ -38,6 +38,76 @@ for (let i = 0; i < data.length; i += 1) {
     button.innerHTML = "Add to Cart"
     newDiv.appendChild(button)
 
-
-
 }
+
+    //making the cart 
+    const cart = [ ]
+
+    function addItem(item, price){
+        for (let i = 0; i < cart.length; i += 1){
+            if (cart[i].item === item) {
+                cart [i].qty += 1
+                return
+
+            }
+        }
+        const storage = {item, price, qty:1 }
+        cart.push(storage)
+
+    }
+
+    //Show Items
+    function showItems(){
+        const qty = getQty()
+        console.log(`You have ${qty} items in your cart`)
+
+        for (let i = 0; i < cart.length; i += 1){
+            console.log(`-${cart[i].item} $${cart[i].price} x ${cart[i].qty}`)
+        }
+
+
+        
+        console.log(`Total in cart: $${getTotal()}`)
+
+    }
+
+
+    //Get Qty 
+    function getQty () {
+        let qty = 0 
+        for (let i =0; i < cart.length; i += 1){
+            qty += cart[i].qty
+
+        }
+        return qty 
+        
+    }
+
+    //Get total 
+    function getTotal() {
+    let total = 0
+    for (let i = 0; i < cart.length; i += 1){
+        total += cart[i].price * cart[i].qty
+
+        }
+
+    return total.toFixed(2)
+
+    }
+
+
+
+
+    addItem('happy', 0.99)
+    addItem('sad', 2.54)
+    addItem('angry', 5.50)
+    addItem('happy', 0.99)
+    addItem('happy', 0.99)
+    addItem('sad', 2.54)
+
+
+
+    showItems()
+
+
+
