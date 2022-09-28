@@ -4,9 +4,18 @@ const itemsContainer = document.querySelector('#items');
 const itemList = document.getElementById('item-list'); 
 const cartQty = document.getElementById('cart-qty'); 
 const cartTotal = document.getElementById ('cart-total'); 
+const all_items_button = Array.from(document.querySelectorAll("button"))
 
 
+
+console.log(all_items_button)
 //console.log(itemList)
+
+//adding event listener to the button 
+all_items_button.forEach(elt => elt.addEventListener('click', () => {
+    addItem(elt.getAttribute('id'), elt.getAttribute('data-price'))
+    showItems()
+  }))
 
 
 // the length of our data determines how many times this loop goes around
@@ -113,14 +122,29 @@ for (let i = 0; i < data.length; i += 1) {
 
     //Get Qty ----------------------------------------------------------------
     function getQty () {
-        let qty = 0; 
-        for (let i =0; i < cart.length; i += 1){
-            qty += cart[i].qty; 
+      let qty = 0; 
+      for (let i =0; i < cart.length; i += 1){
+          qty += cart[i].qty; 
 
-        }
-        return qty 
-        
+      }
+      return qty 
+      
+  }
+
+   function removeItem(name, qty = 0) {
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].name.toLowerCase() === name.toLowerCase()) {
+      if (qty > 0) {
+        cart[i].qty -= qty;
+      }
+      if (cart[i].qty < 1 || qty === 0) {
+        cart.splice(i, 1); // start at index i, and remove that 1 singular item.
+      }
+      showItems();
+      return;
     }
+  }
+}
 
 
 //Remove items from cart--------------------------------------
@@ -154,14 +178,7 @@ for (let i = 0; i < data.length; i += 1) {
         }
         }
 
-          
- 
-
-
-
-
-
-
+        
 
     // addItem('happy', 0.99)
     // addItem('sad', 2.54)
